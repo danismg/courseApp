@@ -17,27 +17,4 @@ class CourseVideo extends Model
     {
         return $this->belongsTo(Course::class);
     }
-
-    // check apakah di berlangganan atau tidak
-    public function subscribe_transactions()
-    {
-        return $this->hasMany(SubscribeTransaction::class);
-    }
-
-    public function hasActiveSubscription()
-    {
-        $latestSubscription = $this->subscribe_transactions()->where('is_paid', true)->latest()->first();
-
-        if (!$latestSubscription) {
-            return false;
-        }
-
-        // Penjelasan :
-        // 1. Mengambil tanggal berlangganan terakhir
-        // 2. Menambahkan 1 bulan ke tanggal berlangganan terakhir
-        // 3. Mengambil tanggal sekarang
-        // 4. Membandingkan apakah tanggal sekarang lebih kecil dari tanggal berlangganan terakhir + 1 bulan
-        $subcriptionEndDate = Carbon::parse($latestSubscription->subscription_start_date)->addMonth();
-        return Carbon::now()->lessThanOrEqualTo($subcriptionEndDate);
-    }
 }

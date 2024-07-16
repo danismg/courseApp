@@ -32,13 +32,13 @@ class RegisteredUserController extends Controller
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'occupation' => ['required', 'string', 'max:255'],
-            'avatar' => ['required', 'string', 'mimes:jpg,jpeg,png'],
+            'avatar' => ['required', 'image', 'mimes:jpg,jpeg,png'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         //proses upload file photo kepada project laravel kita'
-        if ($request->file('avatar')) {
+        if ($request->hasFile('avatar')) {
             $avatarPath = $request->file('avatar')->store('avatars', 'public');
         } else {
             $avatarPath = 'images/avatar-default.png';
@@ -49,13 +49,13 @@ class RegisteredUserController extends Controller
             // request diambil dari form yang diinputkan oleh view
             'email' => $request->email,
             'occupation' => $request->occupation,
-            'avatar' => $request->avatarPath,
+            'avatar' => $avatarPath,
             'email' => $request->email,
             'password' => Hash::make($request->password),
         ]);
 
         event(new Registered($user));
-
+        $user->assignRole('student');
         Auth::login($user);
 
         return redirect(route('dashboard', absolute: false));
