@@ -47,7 +47,7 @@ class CourseController extends Controller
      */
     public function store(StoreCourseRequest $request)
     {
-        //
+
         $teacher = Teacher::where('user_id', Auth::user()->id)->first();
 
         if (!$teacher) {
