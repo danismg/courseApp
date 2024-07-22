@@ -16,7 +16,7 @@
         class="max-w-[1200px] mx-auto w-full flex flex-col gap-10 pb-[50px] bg-[url('assets/background/Hero-Banner.png')] bg-center bg-no-repeat bg-cover rounded-[32px] overflow-hidden">
         <nav class="flex justify-between items-center pt-6 px-[50px]">
             <a href="">
-                <img src="assets/logo/logo.svg" alt="logo">
+                <img style="height: 60px" src="assets/logo/logoCourse.svg" alt="logo">
             </a>
             <ul class="flex items-center gap-[30px] text-white">
                 <li>
